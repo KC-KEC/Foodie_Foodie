@@ -1,4 +1,4 @@
-package edu.nyu.cs.foodie.loader;
+package edu.nyu.cs.foodie.Loader;
 
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;

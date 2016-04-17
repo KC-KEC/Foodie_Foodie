@@ -1,4 +1,4 @@
-package edu.nyu.cs.foodie.loader;
+package edu.nyu.cs.foodie.Loader;
 
 
 import org.json.simple.JSONObject;
@@ -8,19 +8,16 @@ import org.json.simple.parser.ParseException;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.Set;
 
 public class LoadReviews extends Loader {
   private final JSONParser jparser;
+  private Set<String> targetUsers;
 
   public LoadReviews(String filename) {
     super(filename);
-    jparser = new JSONParser();
-  }
-
-  public static void main(String[] args) {
-    Loader loader = new LoadReviews(
-        "/Users/Kyle/yelp_dataset_challenge_academic_dataset/yelp_academic_dataset_review.json");
-    loader.load();
+    this.targetUsers = PreLoad.targetUsers;
+    this.jparser = new JSONParser();
   }
 
   @Override
@@ -47,6 +44,9 @@ public class LoadReviews extends Loader {
       JSONObject jobj = (JSONObject) jparser.parse(line);
       String review_id = (String) jobj.get("review_id");
       String user_id = (String) jobj.get("user_id");
+      if (!targetUsers.contains(user_id)) {
+        return;
+      }
       String business_id = (String) jobj.get("business_id");
       long stars = (Long) jobj.get("stars");
       String date = (String) jobj.get("date");

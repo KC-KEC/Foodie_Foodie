@@ -1,19 +1,21 @@
-package edu.nyu.cs.foodie.loader;
+package edu.nyu.cs.foodie.Loader;
 
-import edu.nyu.cs.foodie.loader.Loader;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
 
 import java.sql.*;
+import java.util.Set;
 
 public final class LoadUsers extends Loader {
   private final JSONParser jparser;
+  private Set<String> targetUser;
 
   public LoadUsers(String filename) {
     super(filename);
-    jparser = new JSONParser();
+    this.targetUser = PreLoad.targetUsers;
+    this.jparser = new JSONParser();
   }
 
   @Override
@@ -21,6 +23,9 @@ public final class LoadUsers extends Loader {
     try {
       JSONObject jobj = (JSONObject) jparser.parse(line);
       String userID = (String) jobj.get("user_id");
+      if (!targetUser.contains(userID)) {
+        return;
+      }
       String userName = (String) jobj.get("name");
       String insertUser = "INSERT INTO USERS (ID, NAME) VALUES (?, ?)";
       PreparedStatement pstmt = c.prepareStatement(insertUser);
@@ -34,9 +39,11 @@ public final class LoadUsers extends Loader {
       pstmt = c.prepareStatement(insertFriends);
       for (Object obj : jArray) {
         friendID = (String) obj;
-        pstmt.setString(1, userID);
-        pstmt.setString(2, friendID);
-        pstmt.addBatch();
+        if (targetUser.contains(friendID)) {
+          pstmt.setString(1, userID);
+          pstmt.setString(2, friendID);
+          pstmt.addBatch();
+        }
       }
       pstmt.executeBatch();
       pstmt.close();

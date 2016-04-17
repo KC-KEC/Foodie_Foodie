@@ -1,5 +1,7 @@
-package edu.nyu.cs.foodie.loader;
+package edu.nyu.cs.foodie.Loader;
 
+
+import edu.nyu.cs.foodie.ConnDB.DBConnection;
 
 import java.io.BufferedReader;
 import java.io.File;
@@ -22,7 +24,7 @@ public abstract class Loader {
   abstract void loadLine(String line);
 
   void load() {
-    openDB();
+    c = DBConnection.openDB();
     createTable();
     try {
       File f = new File(filename);
@@ -39,27 +41,6 @@ public abstract class Loader {
       System.exit(1);
     }
 
-    closeDB();
-  }
-
-  void openDB() {
-    try {
-      Class.forName("org.postgresql.Driver");
-      this.c = DriverManager.getConnection("jdbc:postgresql://localhost:5432/foodiedb", "Kyle", "");
-    } catch (SQLException e) {
-      System.err.println("[Error]: Can not connect to database.");
-      System.exit(1);
-    } catch (ClassNotFoundException e) {
-      System.err.println("[Error]: org.postgresql.Driver not found.");
-      System.exit(1);
-    }
-  }
-
-  void closeDB() {
-    try {
-      this.c.close();
-    } catch (SQLException e) {
-      System.err.println("[Error]: Can not close database");
-    }
+    DBConnection.closeDB();
   }
 }
