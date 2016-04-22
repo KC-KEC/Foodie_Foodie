@@ -5,19 +5,55 @@ import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
 
+import java.io.*;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Set;
 
 public class LoadReviews extends Loader {
   private final JSONParser jparser;
   private Set<String> targetUsers;
+  private Map<String, String> businessLoc;
+  private Map<String, String> city_state;
+  private PrintWriter pw;
 
-  public LoadReviews(String filename) {
+  public LoadReviews(String filename, PrintWriter pw) {
     super(filename);
     this.targetUsers = PreLoad.targetUsers;
     this.jparser = new JSONParser();
+    this.pw = pw;
+    this.city_state = new HashMap<>();
+    this.businessLoc = new HashMap<>();
+
+    try {
+      File f;
+      FileReader fr;
+      BufferedReader br;
+      String line;
+
+      f = new File("business_location.txt");
+      fr = new FileReader(f);
+      br = new BufferedReader(fr);
+      while ((line = br.readLine()) != null) {
+        String[] sp = line.split(",");
+        businessLoc.put(sp[0], sp[1]);
+        if (sp.length == 3) {
+          city_state.put(sp[1], sp[2]);
+        }
+      }
+
+      br.close();
+      fr.close();
+    } catch (FileNotFoundException e) {
+      System.err.println("[Error]: 'business_location.txt' not found. Load business data first.");
+      System.exit(1);
+    } catch (IOException e) {
+      System.err.println("[Error]: Fail to read 'business_location.txt'. Load business data first.");
+      System.exit(1);
+    }
   }
 
   @Override
@@ -34,7 +70,7 @@ public class LoadReviews extends Loader {
       stmt.executeUpdate(reviewSQL);
       stmt.close();
     } catch (SQLException e) {
-      System.err.println("[Error]: Can not create table or table exists.");
+      System.err.println("[Error]: Can not create reviews table or table exists.");
     }
   }
 
@@ -52,6 +88,9 @@ public class LoadReviews extends Loader {
       String date = (String) jobj.get("date");
       String reviews = (String) jobj.get("text");
 
+      String city = businessLoc.get(business_id);
+      pw.println(user_id + "," + city);
+
       String insertReviews = "INSERT INTO REVIEWS VALUES (?,?,?,?,?,?)";
       PreparedStatement pstmt = c.prepareStatement(insertReviews);
       pstmt.setString(1, review_id);
@@ -63,6 +102,7 @@ public class LoadReviews extends Loader {
 
       pstmt.executeUpdate();
       pstmt.close();
+
     } catch (ParseException e) {
       System.err.println("[Error]: Fail to parse JSON");
       System.exit(1);

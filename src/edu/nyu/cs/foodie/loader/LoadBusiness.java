@@ -5,22 +5,47 @@ import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
 
+import java.io.IOException;
+import java.io.PrintWriter;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.HashMap;
+import java.util.Map;
 
 public class LoadBusiness extends Loader {
   private final JSONParser jparser;
+  Map<String, String> city_stateMap;
+  PrintWriter pw_cityMap;
+  PrintWriter pw_businessLoc;
 
-  public LoadBusiness(String filename) {
+  public LoadBusiness(String filename, PrintWriter pw_cityMap, PrintWriter pw_businessLoc) {
     super(filename);
-    jparser = new JSONParser();
+    this.jparser = new JSONParser();
+    this.city_stateMap = new HashMap<>();
+    this.pw_cityMap = pw_cityMap;
+    this.pw_businessLoc = pw_businessLoc;
   }
 
   public static void main(String[] args) {
-    Loader loader = new LoadBusiness(
-        "/Users/Kyle/yelp_dataset_challenge_academic_dataset/yelp_academic_dataset_business.json");
-    loader.load();
+
+    try {
+      PrintWriter pw1 = new PrintWriter("city_state");
+      PrintWriter pw2 = new PrintWriter("business_location");
+      Loader loader = new LoadBusiness(
+          "/Users/Kyle/yelp_dataset_challenge_academic_dataset/yelp_academic_dataset_business.json"
+      , pw1, pw2);
+
+      loader.load();
+
+      pw1.flush();
+      pw2.flush();
+      pw1.close();
+      pw2.close();
+    } catch (IOException e) {
+      System.err.println("[Error]: Fail to open 'city_state' or 'business_location' file.");
+      System.exit(1);
+    }
   }
 
   @Override
@@ -46,6 +71,10 @@ public class LoadBusiness extends Loader {
 
   @Override
   void loadLine(String line) {
+    if (pw_businessLoc == null || pw_cityMap == null) {
+      System.err.println("[Error]: set output file first.");
+      System.exit(1);
+    }
     try {
       JSONObject jobj = (JSONObject) jparser.parse(line);
       String business_id = (String) jobj.get("business_id");
@@ -78,6 +107,13 @@ public class LoadBusiness extends Loader {
 
       pstmt.executeUpdate();
       pstmt.close();
+
+      if (!city_stateMap.containsKey(city)) {
+        city_stateMap.put(city, state);
+        pw_cityMap.println(String.format("%s,%s", city, state));
+      }
+
+      pw_businessLoc.println(String.format("%s,%s,%s", business_id, city, state));
     } catch (ParseException e) {
       System.err.println("[Error]: Fail to parse JSON");
       System.exit(1);
