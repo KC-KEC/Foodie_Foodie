@@ -34,7 +34,7 @@ public class LoadReviews extends Loader {
       BufferedReader br;
       String line;
 
-      f = new File("business_location.txt");
+      f = new File("src/edu/nyu/cs/foodie/Files/business_location.txt");
       fr = new FileReader(f);
       br = new BufferedReader(fr);
       while ((line = br.readLine()) != null) {

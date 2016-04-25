@@ -1,19 +1,12 @@
 package edu.nyu.cs.foodie.util;
 
 import java.util.Comparator;
-import java.util.HashMap;
 import java.util.Map;
 
-public class ValueComparator<K, V extends Comparable<V>> implements Comparator<K> {
-
-  private Map<K, V> map = new HashMap<>();
-
-  public ValueComparator(Map<K, V> map) {
-    this.map = map;
-  }
+public class ValueComparator<K, V extends Comparable<V>> implements Comparator<Map.Entry<K, V>> {
 
   @Override
-  public int compare(K key1, K key2) {
-    return -map.get(key1).compareTo(map.get(key2));
+  public int compare(Map.Entry<K, V> entry1, Map.Entry<K, V> entry2) {
+    return entry2.getValue().compareTo(entry1.getValue());
   }
 }

@@ -19,6 +19,8 @@ public class ProcessRatings {
   // user -> (features -> frequency)
   private static Map<String, Map<String, Integer>> userFeatures = new HashMap<>();
 
+  private static Comparator<Map.Entry<String, Integer>> comparator = new ValueComparator();
+
   public static void main(String[] args) {
     process();
   }
@@ -47,9 +49,11 @@ public class ProcessRatings {
         if (stars >= 4.0) {
           List<String> types = restaurantType.get(business);
           for (String type : types) {
-            userFeatures.get(user).putIfAbsent(type, 0);
-            int freq = userFeatures.get(user).get(type);
-            userFeatures.get(user).put(type, freq + 1);
+            if (!type.equals("Restaurants") && !type.equals("Food")) {
+              userFeatures.get(user).putIfAbsent(type, 0);
+              int freq = userFeatures.get(user).get(type);
+              userFeatures.get(user).put(type, freq + 1);
+            }
           }
         }
       }
@@ -69,22 +73,22 @@ public class ProcessRatings {
 
   private static void  printoutUserFeatures() {
     try {
-      PrintWriter pw = new PrintWriter("user_features.txt");
+      PrintWriter pw = new PrintWriter("src/edu/nyu/cs/foodie/Files/user_features.txt");
       StringBuilder sb = new StringBuilder();
       for (String user : userFeatures.keySet()) {
-        sb.append(user).append("-");
+        sb.append(user).append("##");
 
-        Comparator<String> comparator = new ValueComparator<>(userFeatures.get(user));
-        TreeMap<String, Integer> sortedFeature = new TreeMap<>(comparator);
-        sortedFeature.putAll(userFeatures.get(user));
+        List<Map.Entry<String, Integer>> sortedFeature = new ArrayList<>();
+        sortedFeature.addAll(userFeatures.get(user).entrySet());
+        Collections.sort(sortedFeature, comparator);
 
         int count = 0;
-        for (String feature : sortedFeature.keySet()) {
+        for (Map.Entry<String, Integer> entry : sortedFeature) {
           if (count == 0) {
-            sb.append(feature).append(":").append(sortedFeature.get(feature));
+            sb.append(entry.getKey()).append("-:").append(entry.getValue());
           }
           else {
-            sb.append(",").append(feature).append(":").append(sortedFeature.get(feature));
+            sb.append(",").append(entry.getKey()).append("-:").append(entry.getValue());
           }
           count++;
           if (count > 10) {
@@ -99,6 +103,7 @@ public class ProcessRatings {
       pw.flush();
       pw.close();
     } catch (IOException e) {
+      e.printStackTrace();
       System.err.println("[Error]: Fail to write to user_features.txt");
       System.exit(1);
     }

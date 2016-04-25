@@ -14,15 +14,15 @@ import org.json.simple.parser.ParseException;
 import java.io.*;
 import java.util.*;
 
-public class FindAllFeatures {
+public class ProcessReviews {
 
-  private final MaxentTagger posTagger;
-  private final WordnetStemmer stemmer;
-  private JSONParser jParser;
+  private static final MaxentTagger posTagger;
+  private static final WordnetStemmer stemmer;
+  private static JSONParser jParser;
 
-  public FindAllFeatures() {
-    this.jParser = new JSONParser();
-    this.posTagger = new MaxentTagger("lib/english-bidirectional-distsim.tagger");
+  static {
+    jParser = new JSONParser();
+    posTagger = new MaxentTagger("lib/english-bidirectional-distsim.tagger");
     Dictionary dict = new Dictionary(new File("lib/dict"));
     try {
       dict.open();
@@ -30,18 +30,18 @@ public class FindAllFeatures {
       System.err.println("[Error]: Fail to open WordNet dictionary.");
       System.exit(1);
     }
-    this.stemmer = new WordnetStemmer(dict);
+    stemmer = new WordnetStemmer(dict);
   }
 
   public static void main(String[] args) {
-    FindAllFeatures faf = new FindAllFeatures();
-    faf.find();
+    ProcessReviews.process();
   }
 
-  public void find() {
+  public static void process() {
     String filename =
         "/Users/Kyle/yelp_dataset_challenge_academic_dataset/yelp_academic_dataset_review.json";
-    String output = "all_features.txt";
+
+    String output = "src/edu/nyu/cs/foodie/Files/features_reviews.txt";
 
     try {
       File f = new File(filename);
@@ -49,42 +49,17 @@ public class FindAllFeatures {
       BufferedReader br = new BufferedReader(fr);
       String line;
 
-      Set<String> features = new HashSet<>();
+      Set<String> featuresSet = new HashSet<>();
       int count = 1;
-      Map<String, Integer> map = new HashMap<>();
       while ((line = br.readLine()) != null) {
-
         JSONObject jobj = (JSONObject) jParser.parse(line);
         String user_id = (String) jobj.get("user_id");
-        if (!map.containsKey(user_id)) {
-          map.put(user_id, 0);
-        }
-        map.put(user_id, map.get(user_id) + 1);
-
         String review = (String) jobj.get("text");
 //        getFeatures(review, features);
       }
 
-      int result = 0;
-      int reviewCount = 0;
-      for (String user : map.keySet()) {
-        if (map.get(user) >= 20) {
-          result++;
-          reviewCount += map.get(user);
-        }
-      }
-      System.out.println(result);
-      System.out.println(reviewCount);
-
-      PrintWriter pw = new PrintWriter(output);
-//      for (String user : map.keySet()) {
-//        pw.println(user + " " + map.get(user));
-//      }
-
       br.close();
       fr.close();
-      pw.flush();
-      pw.close();
     } catch (ParseException e) {
       System.err.println("[Error]: Fail to parse JSON file.");
       System.exit(1);

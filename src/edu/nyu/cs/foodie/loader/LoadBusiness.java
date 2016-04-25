@@ -30,8 +30,8 @@ public class LoadBusiness extends Loader {
   public static void main(String[] args) {
 
     try {
-      PrintWriter pw1 = new PrintWriter("city_state");
-      PrintWriter pw2 = new PrintWriter("business_location");
+      PrintWriter pw1 = new PrintWriter("src/edu/nyu/cs/foodie/Files/city_state");
+      PrintWriter pw2 = new PrintWriter("src/edu/nyu/cs/foodie/Files/business_location");
       Loader loader = new LoadBusiness(
           "/Users/Kyle/yelp_dataset_challenge_academic_dataset/yelp_academic_dataset_business.json"
       , pw1, pw2);

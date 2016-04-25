@@ -1,0 +1,412 @@
+Dravosburg,PA
+Bethel Park,PA
+Pittsburgh,PA
+rankin,PA
+Carnegie,PA
+Homestead,PA
+Munhall,PA
+West Homestead,PA
+Pittsburgh/Waterfront,PA
+West Mifflin,PA
+McKeesport,PA
+Mc Kees Rocks,PA
+McKees Rocks,PA
+Bellvue,PA
+Bellevue,PA
+Mount Lebanon,PA
+Dormont,PA
+Swissvale,PA
+Wilkinsburg,PA
+Aspinwall,PA
+Brookline,PA
+Castle Shannon,PA
+Delmont,PA
+Belmont,NC
+Huntersville,NC
+Matthews,NC
+Charlotte,NC
+Mount Holly,NC
+Pineville,NC
+Pineville ,NC
+University,NC
+Fort Mill,SC
+Lake Wylie,SC
+Clover,SC
+Madison,WI
+De Forest,WI
+Deforest,WI
+Mc Farland,WI
+McFarland,WI
+Middleton,WI
+Sun Prairie,WI
+Windsor,WI
+Monona,WI
+Urbana,IL
+Champaign,IL
+Savoy,IL
+Glendale,AZ
+Phoenix,AZ
+Chandler,AZ
+Scottsdale,AZ
+Tempe,AZ
+Florence,AZ
+Peoria,AZ
+Carefree,AZ
+Phoenix, AZ,AZ
+Cave Creek,AZ
+Mesa,AZ
+Anthem,AZ
+Ahwatukee,AZ
+Phoenix-Ahwatukee,AZ
+Pheonix,AZ
+Gilbert,AZ
+Queen Creek,AZ
+Gold Canyon,AZ
+Apache Junction,AZ
+Goldfield,AZ
+Casa Grande,AZ
+Coolidge,AZ
+Higley,AZ
+Sun Lakes,AZ
+Paradise Valley,AZ
+Fort Mcdowell,AZ
+Fountain Hills,AZ
+Maricopa,AZ
+chandler,AZ
+glendale,AZ
+Surprise,AZ
+Arlington,AZ
+Black Canyon City,AZ
+Buckeye,AZ
+Goodyear,AZ
+Litchfield Park,AZ
+Tonopah,AZ
+Wickenburg,AZ
+Sedona,AZ
+Henderson,NV
+Las Vegas,NV
+North Las Vegas,NV
+N Las Vegas,NV
+N. Las Vegas,NV
+C Las Vegas,NV
+Sunrise,NV
+Las Vegas ,NV
+Summerlin,NV
+Verona,PA
+Ingram,PA
+Crafton,PA
+Millvale,PA
+Mount Washington,PA
+Oakland,PA
+Sharpsburg,PA
+Squirrel Hill,PA
+Mckees Rocks,PA
+Braddock,PA
+Upper Saint Clair,PA
+Concord,NC
+Concord Mills,NC
+Harrisburg,NC
+Indian Trail,NC
+McAdenville,NC
+Waxhaw,NC
+Charlotte ,NC
+Independence,NC
+Mint Hill,NC
+Cottage Grove,WI
+Dane,WI
+Fitchburg,WI
+Stoughton,WI
+Waunakee,WI
+Tolleson,AZ
+Avondale,AZ
+New River,AZ
+Scotesdale,AZ
+Mesa AZ,AZ
+Glibert,AZ
+Old Scottsdale,AZ
+Rio Verde,AZ
+Tempe ,AZ
+Guadalupe,AZ
+El Mirage,AZ
+Sun City,AZ
+Gila Bend,AZ
+Laveen,AZ
+Youngtown,AZ
+Morristown,AZ
+Waddell,AZ
+Wittmann,AZ
+Sun City West,AZ
+Roosevelt,AZ
+Boulder City,NV
+Henderston,NV
+Nellis Air Force Base,NV
+Nellis AFB,NV
+Green Valley,NV
+North Scottsdale,AZ
+Regent Square,PA
+Litchfield Park ,AZ
+Nellis Afb,NV
+San Tan Valley,AZ
+Tortilla Flat,AZ
+Mesa ,AZ
+,AZ
+Fort McDowell,AZ
+Chandler Heights,AZ
+Arcadia,AZ
+W Henderson,NV
+LAS VEGAS,NV
+DeForest,WI
+Paradise,NV
+Shadyside,PA
+Stanfield,AZ
+Edgewood,PA
+Mattews,NC
+Montréal,QC
+Anjou,QC
+Saint-Leonard,QC
+Montreal-Nord,QC
+Montréal-Nord,QC
+Pointe-Aux-Trembles,QC
+Montreal,QC
+Outremont,QC
+Verdun,QC
+Montéal,QC
+Montreal-Est,QC
+Westmount,QC
+Dorval,QC
+Mont-Royal,QC
+Saint-Laurent,QC
+Cote Saint-Luc,QC
+Montreal-Ouest,QC
+Laval,QC
+Fabreville,QC
+Vimont,QC
+Lachine,QC
+Lasalle,QC
+Pierrefonds,QC
+Dollard-Des-Ormeaux,QC
+LaSalle,QC
+Roxboro,QC
+Pointe-Claire,QC
+Dollard-des-Ormeaux,QC
+Kirkland,QC
+Sainte-Anne-De-Bellevue,QC
+Sainte-Genevieve,QC
+Baie-D'urfe,QC
+Pointe Claire,QC
+Longueuil,QC
+Brossard,QC
+Greenfield Park,QC
+Saint-Lambert,QC
+Saint-Hubert,QC
+La Prairie,QC
+Terrebonne,QC
+Rosemere,QC
+Sainte-Therese,QC
+Saint-Eustache,QC
+Boisbriand,QC
+Blainville,QC
+Deux-Montagnes,QC
+Kitchener,ON
+Waterloo,ON
+Cambridge,ON
+Dallas,TX
+Edinburgh,EDH
+Leith,EDH
+Musselburgh,ELN
+South Queensferry,EDH
+Stockbridge,HAM
+Roslin,MLN
+Dalkeith,MLN
+Inverkeithing,FIF
+Loanhead,MLN
+Lasswade,MLN
+Newbridge,EDH
+Bridgeville,PA
+Penicuik,MLN
+Bonnyrigg,SCB
+Juniper Green,EDH
+Ratho,EDH
+St Jacobs,ON
+Green Tree,PA
+Lawrenceville,PA
+Stallings,NC
+Boucherville,QC
+Tonto Basin,AZ
+Allegheny,PA
+South Las Vegas,NV
+Queensferry,EDH
+MMRP,AZ
+Spring Valley,NV
+Enterprise,NV
+Mathews,NC
+Mt. Oliver Boro,PA
+Tega Cay,SC
+Columbus,WI
+Oregon,WI
+Locust,NC
+Monroe,NC
+Wesley Chapel,NC
+Weddington,NC
+Etna,PA
+Blawnox,PA
+Brentwood,PA
+Heidelberg,PA
+South Hills,PA
+North Las Vegas ,NV
+N E Las Vegas,NV
+N W Las Vegas,NV
+Central Henderson,NV
+Pittsburgh/S. Hills Galleria,PA
+Beaconsfield,QC
+Cramond,EDH
+W Spring Valley,NV
+Rockport,TX
+North Queensferry,FIF
+Karlsruhe,BW
+Rheinstetten,BW
+Ettlingen,BW
+Neuburg am Rhein,RP
+Durmersheim,BW
+Bietigheim,BW
+Eggenstein-Leopoldshafen,BW
+Karlsbad,BW
+Wörth am Rhein,RP
+Pfinztal,BW
+Weingarten,BW
+Waldbronn,BW
+Hagenbach,RP
+Weingarten (Baden),BW
+Firth of Forth,EDH
+Stutensee,BW
+Portobello,EDH
+Cote-Saint-Luc,QC
+Jockgrim,RP
+Water of Leith,EDH
+Sainte-Ann-De-Bellevue,QC
+Rosemère,QC
+Centennial Hills,NV
+Victoria Park,ON
+Indian Land,SC
+Rankin,PA
+New Dundee,ON
+W Summerlin,NV
+Burbank,CA
+Breslau,ON
+Pittsburrgh,PA
+Île des Soeurs,QC
+Montréal-Ouest,QC
+Lake Las Vegas,NV
+Allentown,PA
+Straiton,MLN
+Summerlin South,NV
+Clark,NV
+Milton Bridge,MLN
+L'Île-Bizard,QC
+Mt Lebanon,PA
+Grand Canyon,AZ
+Sun City Anthem,AZ
+Conestogo,ON
+Metro Phoenix,AZ
+St Leonard,QC
+St-Laurent,QC
+Sainte-Thérèse,QC
+Phoenix ,AZ
+Forchheim,BW
+Saint Laurent,QC
+Glendale Az,AZ
+Québec,QC
+Ft. Mill,SC
+Kennedy Township,PA
+Mcfarland,WI
+Le Vieux-Port,QC
+Fort mill,SC
+Balerno,MLN
+Desert Ridge,AZ
+Robinson Township,PA
+phoenix,AZ
+Bonnyrigg and Lasswade,MLN
+East Mesa,AZ
+Communauté-Urbaine-de-Montréal,QC
+Midlothian,MLN
+Henderson and Las vegas,NV
+Glasgow,EDH
+Bruntsfield,EDH
+City Center,NV
+Ste-Rose,QC
+henderson,NV
+NELLIS AFB,NV
+Surprise Crossing,AZ
+Sainte-Anne-de-Bellevue,QC
+Deux-Montagnes Regional County Municipality,QC
+South Mountain,AZ
+Montreal-West,QC
+Cornwell Development,AZ
+Stutensee-Blankenloch,BW
+Le Sud-Ouest,QC
+Banksville,PA
+Fort Kinnaird,EDH
+Downtown,PA
+Bloomfield,PA
+Rock Hill,SC
+Lower Lawrenceville,PA
+Chateau,PA
+East Liberty,PA
+Chandler-Gilbert,AZ
+Whitehall,PA
+Phoenix Sky Harbor Center,AZ
+Eagan,MN
+Southside Flats,PA
+Central City,AZ
+North Carolina,NC
+Mount Royal,QC
+San Diego,CA
+Queen Valley,AZ
+City of Edinburgh,EDH
+Peoria ,AZ
+South Gyle,EDH
+L'Île-des-Soeurs,QC
+Westworld Scottsdale,AZ
+Meza,AZ
+Central City Village,AZ
+Old Montreal,QC
+Wörth,RP
+New Town,EDH
+Saint-laurent,QC
+Scotland,EDH
+London,EDH
+Kahnawake,QC
+Edinburgh City of,EDH
+Mascouche,QC
+St. Agatha,ON
+Whitney,NV
+Bocholt,NW
+Bruchsal,BW
+Dalgety Bay,FIF
+St. Jacobs,ON
+Pittsburg,PA
+Old Town,EDH
+Gilbert, AZ,AZ
+Newington,EDH
+Charlemagne,QC
+Stowe Township,PA
+Laveen Village,AZ
+Scottdale,AZ
+Los Angeles,CA
+Saint Leonard,QC
+Central,AZ
+Dollard-Des Ormeaux,QC
+Phoenix Metro Area,AZ
+Nboulder City,NV
+Mirabel,QC
+Shady Side,PA
+110. Las Vegas,NV
+Golden Square Mile,QC
+Henderson NV,NV
+Saint-Henri,QC
+Las Vegas, NV,NV
+Ahwatukee Foothills Village,AZ
+La Paz,AL
+Maricopa AZ,AZ
+Sunnyslope,AZ
+Estrella Village,AZ

@@ -18,8 +18,8 @@ public class Main {
     /* load business data */
     System.out.println("Loading business data ... ");
     try {
-      PrintWriter pw1 = new PrintWriter("city_state.txt");
-      PrintWriter pw2 = new PrintWriter("business_location.txt");
+      PrintWriter pw1 = new PrintWriter("src/edu/nyu/cs/foodie/Files/city_state.txt");
+      PrintWriter pw2 = new PrintWriter("src/edu/nyu/cs/foodie/Files/business_location.txt");
       Loader businessLoader = new LoadBusiness(
           "/Users/Kyle/yelp_dataset_challenge_academic_dataset/yelp_academic_dataset_business.json"
           , pw1
@@ -39,7 +39,7 @@ public class Main {
     /* load reviews data */
     System.out.println("Loading reviews data ... ");
     try {
-      PrintWriter userLocWriter = new PrintWriter("userLocCount.txt");
+      PrintWriter userLocWriter = new PrintWriter("src/edu/nyu/cs/foodie/Files/userLocCount.txt");
 
       Loader reviewLoader = new LoadReviews(
           "/Users/Kyle/yelp_dataset_challenge_academic_dataset/yelp_academic_dataset_review.json"

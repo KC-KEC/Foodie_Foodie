@@ -14,7 +14,7 @@ public class AfterLoad {
 
   public static void loadUserLocation() {
     try {
-      File f = new File("userLocCount.txt");
+      File f = new File("src/edu/nyu/cs/foodie/Files/userLocCount.txt");
       FileReader fr = new FileReader(f);
       BufferedReader br = new BufferedReader(fr);
       String line;
@@ -44,7 +44,7 @@ public class AfterLoad {
     }
 
     try {
-      PrintWriter pw = new PrintWriter("userLocation.txt");
+      PrintWriter pw = new PrintWriter("src/edu/nyu/cs/foodie/Files/userLocation.txt");
 
       for (String user : cityCount.keySet()) {
         String maxCity = null;

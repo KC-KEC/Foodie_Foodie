@@ -8,34 +8,42 @@ import edu.nyu.cs.foodie.GeneticAlgorithm.FitnessCalc;
 import edu.nyu.cs.foodie.GeneticAlgorithm.GA;
 import edu.nyu.cs.foodie.GeneticAlgorithm.Individual;
 import edu.nyu.cs.foodie.GeneticAlgorithm.Population;
+import edu.nyu.cs.foodie.util.ValueComparator;
 
 public class FilterGA {
 
-  Connection c = DBConnection.openDB();
-  Set<String> candidates = new HashSet<>();
-  Set<String> friends = new HashSet<>();
-  Map<String, Set<String>> graph = new HashMap<>();
-  Map<String, Integer> scoreMap = new HashMap<>();
-  List<Map.Entry<String, Integer>>  recommendList = new ArrayList<>();
+  static Connection c = DBConnection.openDB();
+  static Set<String> candidates = new HashSet<>();
+  static Set<String> friends = new HashSet<>();
+  static Map<String, Set<String>> graph = new HashMap<>();
+  static Map<String, Integer> scoreMap = new HashMap<>();
+  static List<Map.Entry<String, Integer>>  recommendList = new ArrayList<>();
 
-  public List<Map.Entry<String, Integer>> recommend(String userID) {
+  public static List<String> recommend(String userID) {
     if (userID == null || userID.isEmpty()) {
-      return recommendList;
+      throw new IllegalArgumentException();
     }
 
     graph.put(userID, new HashSet<>());
 
     filtering(userID);
+
     candidates.removeAll(friends);
     System.out.println("candidate size: " + candidates.size());
     System.out.println();
+
     ordering();
 
     DBConnection.closeDB();
-    return recommendList.subList(0, 50);
+
+    List<String> result = new ArrayList<>();
+    for (Map.Entry<String, Integer> entry : recommendList) {
+      result.add(entry.getKey());
+    }
+    return result.subList(0, 50);
   }
 
-  private void ordering() {
+  private static void ordering() {
     try {
       int count = 1;
       for (String candidate : candidates) {
@@ -72,12 +80,7 @@ public class FilterGA {
       }
 
       recommendList.addAll(scoreMap.entrySet());
-      Collections.sort(recommendList, new Comparator<Map.Entry<String, Integer>>() {
-        @Override
-        public int compare(Map.Entry<String, Integer> entry1, Map.Entry<String, Integer> entry2) {
-          return entry2.getValue() - entry1.getValue();
-        }
-      });
+      Collections.sort(recommendList, new ValueComparator<>());
 
     } catch (SQLException e) {
       e.printStackTrace();
@@ -86,7 +89,7 @@ public class FilterGA {
     }
   }
 
-  private int getDensity(Set<String> set) {
+  private static int getDensity(Set<String> set) {
     int links = 0;
     for (String v : set) {
       for (String adj : graph.get(v)) {
@@ -98,7 +101,7 @@ public class FilterGA {
     return links / 2;
   }
 
-  private void filtering(String userID) {
+  private static void filtering(String userID) {
     try {
       PreparedStatement fstmt = c.prepareStatement("select toid from friends where fromid = ?");
       PreparedStatement fofStmt = c.prepareStatement("select toid from friends where fromid = ?");
@@ -135,11 +138,4 @@ public class FilterGA {
     }
   }
 
-  public static void main(String[] args) {
-    FilterGA ga = new FilterGA();
-    System.out.println();
-    for (Map.Entry<String, Integer> entry : ga.recommend("rpOyqD_893cqmDAtJLbdog")) {
-      System.out.println(entry.getKey());
-    }
-  }
 }
