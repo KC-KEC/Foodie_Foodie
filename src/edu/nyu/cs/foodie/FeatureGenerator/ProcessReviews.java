@@ -3,6 +3,7 @@ package edu.nyu.cs.foodie.FeatureGenerator;
 import edu.mit.jwi.Dictionary;
 import edu.mit.jwi.item.POS;
 import edu.mit.jwi.morph.WordnetStemmer;
+import edu.nyu.cs.foodie.ConnDB.DBConnection;
 import edu.stanford.nlp.ling.HasWord;
 import edu.stanford.nlp.ling.TaggedWord;
 import edu.stanford.nlp.process.DocumentPreprocessor;
@@ -12,6 +13,10 @@ import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
 
 import java.io.*;
+import java.sql.Connection;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.*;
 
 public class ProcessReviews {
@@ -19,8 +24,13 @@ public class ProcessReviews {
   private static final MaxentTagger posTagger;
   private static final WordnetStemmer stemmer;
   private static JSONParser jParser;
+  private static Connection c;
+
+  private static String filename =
+      "/Users/Kyle/yelp_dataset_challenge_academic_dataset/yelp_academic_dataset_review.json";
 
   static {
+    c = DBConnection.openDB();
     jParser = new JSONParser();
     posTagger = new MaxentTagger("lib/english-bidirectional-distsim.tagger");
     Dictionary dict = new Dictionary(new File("lib/dict"));
@@ -38,38 +48,32 @@ public class ProcessReviews {
   }
 
   public static void process() {
-    String filename =
-        "/Users/Kyle/yelp_dataset_challenge_academic_dataset/yelp_academic_dataset_review.json";
 
-    String output = "src/edu/nyu/cs/foodie/Files/features_reviews.txt";
-
+    Connection c = DBConnection.openDB();
+    Set<String> allFeatures = new HashSet<>();
     try {
-      File f = new File(filename);
-      FileReader fr = new FileReader(f);
-      BufferedReader br = new BufferedReader(fr);
-      String line;
-
-      Set<String> featuresSet = new HashSet<>();
+      String query = "select userid, reviews from reviews";
+      Statement stmt = c.createStatement();
+      ResultSet rs = stmt.executeQuery(query);
       int count = 1;
-      while ((line = br.readLine()) != null) {
-        JSONObject jobj = (JSONObject) jParser.parse(line);
-        String user_id = (String) jobj.get("user_id");
-        String review = (String) jobj.get("text");
-//        getFeatures(review, features);
+      while (rs.next()) {
+        System.out.println(count++);
+        String user = rs.getString(1);
+        String review = rs.getString(2);
+        getFeatures(review, allFeatures);
       }
 
-      br.close();
-      fr.close();
-    } catch (ParseException e) {
-      System.err.println("[Error]: Fail to parse JSON file.");
-      System.exit(1);
-    } catch (IOException e) {
-      System.err.println("[Error]: Fail to write data to transition_file");
+      rs.close();
+      stmt.close();
+    } catch (SQLException e) {
+      System.err.println("[Error]: Fail to execute query to fetch reviews table.");
       System.exit(1);
     }
+
+    DBConnection.closeDB();
   }
 
-  private void getFeatures(String review, Set<String> features) {
+  private static void getFeatures(String review, Set<String> features) {
     Reader reader = new StringReader(review);
     DocumentPreprocessor documentPreprocessor = new DocumentPreprocessor(reader);
     for (List<HasWord> sentence : documentPreprocessor) {
@@ -89,7 +93,7 @@ public class ProcessReviews {
     }
   }
 
-  private String stem(String word) {
+  private static String stem(String word) {
     List<String> stemmed = stemmer.findStems(word, POS.NOUN);
     if (stemmed.isEmpty()) {
       return word;
@@ -99,14 +103,14 @@ public class ProcessReviews {
     }
   }
 
-  private boolean isNoun(String tag) {
+  private static boolean isNoun(String tag) {
     if (tag == null || tag.isEmpty()) {
       return false;
     }
     return tag.equals("NN") || tag.equals("NNS");
   }
 
-  private boolean isWord(String word) {
+  private static boolean isWord(String word) {
     if (word == null || word.isEmpty()) {
       return false;
     }
