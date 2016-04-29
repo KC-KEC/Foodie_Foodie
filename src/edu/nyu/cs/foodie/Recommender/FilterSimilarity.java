@@ -45,7 +45,7 @@ public class FilterSimilarity {
     }
   }
 
-  public static List<String> filter(List<String> recommendList, String userID) {
+  public static List<String> recommend(List<String> recommendList, String userID) {
     Map<String, Double> scores = new HashMap<>();
     for (String recommend : recommendList) {
       double score = similarity(userID, recommend);

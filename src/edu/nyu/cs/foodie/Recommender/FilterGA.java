@@ -29,25 +29,40 @@ public class FilterGA {
     filtering(userID);
 
     candidates.removeAll(friends);
-    System.out.println("candidate size: " + candidates.size());
-    System.out.println();
+    if (candidates.size() > 1000) {
+      Random rand = new Random();
+      List<String> tmp = new ArrayList<>(candidates);
+      candidates.clear();
+      for (int i = 0; i < 1000; i++) {
+        int index = rand.nextInt(tmp.size());
+        while (candidates.contains(tmp.get(index))) {
+          index = rand.nextInt(tmp.size());
+        }
+        candidates.add(tmp.get(index));
+      }
+    }
+//    System.out.println("candidate size: " + candidates.size());
+//    System.out.println();
 
     ordering();
 
-    DBConnection.closeDB();
+//    DBConnection.closeDB();
 
     List<String> result = new ArrayList<>();
     for (Map.Entry<String, Integer> entry : recommendList) {
       result.add(entry.getKey());
     }
-    return result.subList(0, 50);
+    if (result.size() > 50) {
+      return result.subList(0, 50);
+    }
+    return result;
   }
 
   private static void ordering() {
     try {
       int count = 1;
       for (String candidate : candidates) {
-        System.out.println(count++);
+//        System.out.println(count++);
         Set<String> candidateFriend =new HashSet<>();
         PreparedStatement pstmt = c.prepareStatement("select toid from friends where fromid = ?");
         pstmt.setString(1, candidate);

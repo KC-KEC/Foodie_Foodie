@@ -11,7 +11,7 @@ public class Main {
     String userID = "rpOyqD_893cqmDAtJLbdog";
 
     List<String> filterGA = FilterGA.recommend(userID);
-    List<String> filterContent = FilterSimilarity.filter(filterGA, userID);
+    List<String> filterContent = FilterSimilarity.recommend(filterGA, userID);
 
     List<String> recommendList;
     if (filterContent.size() > 10) {
