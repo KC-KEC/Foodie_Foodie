@@ -75,4 +75,11 @@ public final class LoadUsers extends Loader {
       System.err.println("[Error]: Can not create table or table exists.");
     }
   }
+
+  public static void main(String[] args) {
+    Loader userLoader = new LoadUsers(
+        "/Users/Kyle/yelp_dataset_challenge_academic_dataset/yelp_academic_dataset_user.json");
+    PreLoad.preload();
+    userLoader.load();
+  }
 }

@@ -11,7 +11,7 @@ import java.util.Set;
 public final class LoadTestData extends Loader {
   private final JSONParser jparser;
   private Set<String> targetUser;
-  private final static double TESTRATE = 0.5;
+  private final static double TESTRATE = 0.7;
 
   public LoadTestData(String filename) {
     super(filename);

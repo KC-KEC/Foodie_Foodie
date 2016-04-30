@@ -1,5 +1,6 @@
 package edu.nyu.cs.foodie.Recommender;
 
+import edu.nyu.cs.foodie.FeatureGenerator.ProcessRatings;
 import edu.nyu.cs.foodie.util.ValueComparator;
 
 import java.io.BufferedReader;
@@ -45,7 +46,7 @@ public class FilterSimilarity {
     }
   }
 
-  public static List<String> recommend(List<String> recommendList, String userID) {
+  public static Set<String> recommend(Set<String> recommendList, String userID) {
     Map<String, Double> scores = new HashMap<>();
     for (String recommend : recommendList) {
       double score = similarity(userID, recommend);
@@ -56,15 +57,9 @@ public class FilterSimilarity {
     sortedScore.addAll(scores.entrySet());
     Collections.sort(sortedScore, comparator);
 
-    List<String> result = new ArrayList<>();
-    double rate = 0.5;
-    int size = (int) (recommendList.size() * rate);
+    Set<String> result = new HashSet<>();
     for (Map.Entry<String, Double> entry : sortedScore) {
       result.add(entry.getKey());
-      size--;
-      if (size == 0) {
-        break;
-      }
     }
 
     return result;

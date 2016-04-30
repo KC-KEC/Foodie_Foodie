@@ -3,7 +3,6 @@ package edu.nyu.cs.foodie.Recommender;
 import java.sql.*;
 import java.util.*;
 
-import edu.nyu.cs.foodie.ConnDB.*;
 import edu.nyu.cs.foodie.GeneticAlgorithm.FitnessCalc;
 import edu.nyu.cs.foodie.GeneticAlgorithm.GA;
 import edu.nyu.cs.foodie.GeneticAlgorithm.Individual;
@@ -12,14 +11,18 @@ import edu.nyu.cs.foodie.util.ValueComparator;
 
 public class FilterGA {
 
-  static Connection c = DBConnection.openDB();
-  static Set<String> candidates = new HashSet<>();
-  static Set<String> friends = new HashSet<>();
-  static Map<String, Set<String>> graph = new HashMap<>();
-  static Map<String, Integer> scoreMap = new HashMap<>();
-  static List<Map.Entry<String, Integer>>  recommendList = new ArrayList<>();
+  Connection c;
+  Set<String> candidates = new HashSet<>();
+  Set<String> friends = new HashSet<>();
+  Map<String, Set<String>> graph = new HashMap<>();
+  Map<String, Integer> scoreMap = new HashMap<>();
+  List<Map.Entry<String, Integer>> recommendList = new ArrayList<>();
 
-  public static List<String> recommend(String userID) {
+  public FilterGA(Connection c) {
+    this.c = c;
+  }
+
+  public Set<String> recommend(String userID) {
     if (userID == null || userID.isEmpty()) {
       throw new IllegalArgumentException();
     }
@@ -27,8 +30,11 @@ public class FilterGA {
     graph.put(userID, new HashSet<>());
 
     filtering(userID);
+    System.out.println("friends size: " + friends.size());
 
     candidates.removeAll(friends);
+
+    System.out.println("candidate size before GA: " + candidates.size());
     if (candidates.size() > 1000) {
       Random rand = new Random();
       List<String> tmp = new ArrayList<>(candidates);
@@ -41,29 +47,25 @@ public class FilterGA {
         candidates.add(tmp.get(index));
       }
     }
-//    System.out.println("candidate size: " + candidates.size());
-//    System.out.println();
 
     ordering();
 
-//    DBConnection.closeDB();
+    System.out.println("recommendList size after GA: " + recommendList.size());
 
-    List<String> result = new ArrayList<>();
+    Set<String> result = new HashSet<>();
     for (Map.Entry<String, Integer> entry : recommendList) {
       result.add(entry.getKey());
     }
-    if (result.size() > 50) {
-      return result.subList(0, 50);
-    }
+
+    System.out.println("result size in FilterGA: " + result.size());
+
     return result;
   }
 
-  private static void ordering() {
+  private void ordering() {
     try {
-      int count = 1;
       for (String candidate : candidates) {
-//        System.out.println(count++);
-        Set<String> candidateFriend =new HashSet<>();
+        Set<String> candidateFriend = new HashSet<>();
         PreparedStatement pstmt = c.prepareStatement("select toid from friends where fromid = ?");
         pstmt.setString(1, candidate);
         ResultSet rs = pstmt.executeQuery();
@@ -104,7 +106,7 @@ public class FilterGA {
     }
   }
 
-  private static int getDensity(Set<String> set) {
+  private int getDensity(Set<String> set) {
     int links = 0;
     for (String v : set) {
       for (String adj : graph.get(v)) {
@@ -116,7 +118,7 @@ public class FilterGA {
     return links / 2;
   }
 
-  private static void filtering(String userID) {
+  private void filtering(String userID) {
     try {
       PreparedStatement fstmt = c.prepareStatement("select toid from friends where fromid = ?");
       PreparedStatement fofStmt = c.prepareStatement("select toid from friends where fromid = ?");

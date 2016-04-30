@@ -11,12 +11,10 @@ import java.util.*;
 public class Evaluate {
 
   private static Map<String, Set<String>> user_test_frends = new HashMap<>();
-//  private static Map<String, Set<String>> user_dev_friends = new HashMap<>();
-  private static List<String> testUsers = new ArrayList<>();
+  private static Map<String, Integer> testUsers = new HashMap<>();
 
   public static double evalute() {
     Connection c = DBConnection.openDB();
-    int userCount = 0;
 
     try {
       Statement stmt = c.createStatement();
@@ -34,10 +32,10 @@ public class Evaluate {
           actualFriends++;
         }
 
-        if (actualFriends > 100) {
-          userCount++;
-          testUsers.add(userid);
+        if (actualFriends > 50) {
+          testUsers.put(userid, actualFriends);
           user_test_frends.put(userid, new HashSet<>());
+
           rsTest = pstmt_test.executeQuery();
           while (rsTest.next()) {
             user_test_frends.get(userid).add(rsTest.getString(1));
@@ -54,20 +52,13 @@ public class Evaluate {
       System.exit(1);
     }
 
-    DBConnection.closeDB();
-
-    System.out.println("test user numbers: " + userCount);
+    System.out.println("test user numbers: " + testUsers.size());
 
     double totalPrecision = 0.0;
-    for (String user : testUsers) {
-      List<String> result;
-      result = FilterGA.recommend(user);
-      if (result.size() > 20) {
-        result = FilterSimilarity.recommend(result, user);
-      }
-      if (result.size() > 10) {
-        result = FilterLoc.fileterLoc(result, user);
-      }
+    for (String user : testUsers.keySet()) {
+      Set<String> fromGA = new FilterGA(c).recommend(user);
+      Set<String> fromSim = FilterSimilarity.recommend(fromGA, user);
+      Set<String> result = FilterLoc.recommend(fromSim, user);
 
       int recommendSize = result.size();
 
@@ -80,7 +71,7 @@ public class Evaluate {
 
       double precision = 0.0;
       if (recommendSize != 0) {
-        precision = (double) correct / recommendSize;
+        precision = (double) correct / testUsers.get(user);
       }
       totalPrecision += precision;
 
@@ -88,11 +79,14 @@ public class Evaluate {
           + " | " + precision);
     }
 
-    return totalPrecision / userCount;
+    DBConnection.closeDB();
+
+    return totalPrecision / testUsers.size();
   }
 
   public static void main(String[] args) {
     System.out.println("Recommendation size | Correct Number | Actual Friends size | Precision");
+    System.out.println();
     System.out.println("Final result: " + Evaluate.evalute());
   }
 }

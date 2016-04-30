@@ -13,7 +13,7 @@ import java.util.Set;
 public class PreLoad {
 
   static Set<String> targetUsers = new HashSet<>();
-  static final int REVIEWSCOUNT = 20;
+  static final int REVIEWSCOUNT = 100;
 
   public static void preload() {
     JSONParser jParser = new JSONParser();

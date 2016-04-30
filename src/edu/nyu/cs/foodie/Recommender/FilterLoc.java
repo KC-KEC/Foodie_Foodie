@@ -51,8 +51,8 @@ public class FilterLoc {
 
   }
 
-  public static List<String> fileterLoc(List<String> recommendList, String userID) {
-    List<String> result = new ArrayList<>();
+  public static Set<String> recommend(Set<String> recommendList, String userID) {
+    Set<String> result = new HashSet<>();
     if (recommendList == null || recommendList.isEmpty()) {
       return result;
     }
@@ -83,6 +83,12 @@ public class FilterLoc {
       result.add(sortedScore.get(i).getKey());
       i++;
     }
+
+    while (result.size() < 15 && i < sortedScore.size()) {
+      result.add(sortedScore.get(i).getKey());
+      i++;
+    }
+
 
     return result;
   }
